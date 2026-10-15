@@ -13,12 +13,16 @@ class LeaveHistorySection extends GetView<LeaveController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Obx(() {
       final requests = controller.repository.requests;
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Text('Leave history', style: AppTextStyles.heading3),
+          Text(
+            'Leave history',
+            style: AppTextStyles.heading3.copyWith(color: colors.onSurface),
+          ),
           const SizedBox(height: 8),
           if (requests.isEmpty)
             const AppEmptyState(
@@ -30,10 +34,16 @@ class LeaveHistorySection extends GetView<LeaveController> {
             ...requests.map(
               (request) => Card(
                 child: ListTile(
-                  title: Text(request.type.label),
+                  title: Text(
+                    request.type.label,
+                    style: AppTextStyles.bodyBold
+                        .copyWith(color: colors.onSurface),
+                  ),
                   subtitle: Text(
                     '${DateFormat('d MMM').format(request.start)} – ${DateFormat('d MMM yyyy').format(request.end)} · ${request.days} day(s)\nApplied ${DateFormat('d MMM yyyy').format(request.appliedOn)}'
                     '${request.rejectionReason == null ? '' : '\n${request.rejectionReason}'}',
+                    style: AppTextStyles.bodyMuted
+                        .copyWith(color: colors.onSurfaceVariant),
                   ),
                   isThreeLine: true,
                   trailing: AppStatusChip.auto(request.status.label),

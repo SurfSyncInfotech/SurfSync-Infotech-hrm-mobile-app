@@ -5,12 +5,18 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ThemeController extends GetxController {
   static const _storageKey = 'app_theme_mode';
 
-  ThemeMode _themeMode = ThemeMode.system;
+  ThemeController({ThemeMode initialMode = ThemeMode.system})
+      : _themeMode = initialMode;
+
+  ThemeMode _themeMode;
 
   ThemeMode get themeMode => _themeMode;
-  bool get isDarkMode =>
-      _themeMode == ThemeMode.dark ||
-      (_themeMode == ThemeMode.system && Get.isDarkMode);
+  bool get isDarkMode {
+    if (_themeMode == ThemeMode.dark) return true;
+    if (_themeMode == ThemeMode.light) return false;
+    return WidgetsBinding.instance.platformDispatcher.platformBrightness ==
+        Brightness.dark;
+  }
 
   @override
   void onInit() {
@@ -41,11 +47,13 @@ class ThemeController extends GetxController {
   Future<void> _restoreThemeMode() async {
     final preferences = await SharedPreferences.getInstance();
     final savedMode = preferences.getString(_storageKey);
-    _themeMode = switch (savedMode) {
+    final restored = switch (savedMode) {
       'light' => ThemeMode.light,
       'dark' => ThemeMode.dark,
       _ => ThemeMode.system,
     };
+    _themeMode = restored;
+    Get.changeThemeMode(restored);
     update();
   }
 }

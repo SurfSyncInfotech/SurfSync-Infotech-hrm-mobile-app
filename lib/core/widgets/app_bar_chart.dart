@@ -53,7 +53,10 @@ class AppBarChart extends StatelessWidget {
                       entry.key,
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: AppTextStyles.overline.copyWith(fontSize: 10),
+                      style: AppTextStyles.overline.copyWith(
+                        fontSize: 10,
+                        color: colors.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),

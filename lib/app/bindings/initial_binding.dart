@@ -9,9 +9,14 @@ import '../../data/services/activity_session_service.dart';
 import '../../features/auth/presentation/controllers/session_controller.dart';
 import '../../features/employee/presentation/notifications_screen/presentation/controllers/employee_notifications_controller.dart';
 
+import '../theme/theme_controller.dart';
+
 class InitialBinding extends Bindings {
   @override
   void dependencies() {
+    if (!Get.isRegistered<ThemeController>()) {
+      Get.put<ThemeController>(ThemeController(), permanent: true);
+    }
     Get.put<SessionController>(SessionController(), permanent: true);
     Get.put<EmployeeNotificationsController>(
       EmployeeNotificationsController(),

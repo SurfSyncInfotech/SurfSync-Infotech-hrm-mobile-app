@@ -30,9 +30,12 @@ class AppStatCard extends StatelessWidget {
           Row(
             children: [
               Expanded(
-                child: Text(label.toUpperCase(),
-                    style: AppTextStyles.overline,
-                    overflow: TextOverflow.ellipsis),
+                child: Text(
+                  label.toUpperCase(),
+                  style: AppTextStyles.overline
+                      .copyWith(color: colors.onSurfaceVariant),
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               if (icon != null)
                 Icon(icon, size: 18, color: colors.onSurfaceVariant),
@@ -46,8 +49,13 @@ class AppStatCard extends StatelessWidget {
           ),
           if (caption != null) ...[
             const SizedBox(height: 4),
-            Text(caption!,
-                style: AppTextStyles.bodyMuted.copyWith(fontSize: 12.5)),
+            Text(
+              caption!,
+              style: AppTextStyles.bodyMuted.copyWith(
+                fontSize: 12.5,
+                color: colors.onSurfaceVariant,
+              ),
+            ),
           ],
         ],
       ),

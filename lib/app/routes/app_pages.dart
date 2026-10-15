@@ -10,14 +10,20 @@ import '../../features/design_system/presentation/bindings/design_system_binding
 import '../../features/design_system/presentation/views/design_system_view.dart';
 import '../../features/employee/presentation/attendance_screen/presentation/bindings/attendance_binding.dart';
 import '../../features/employee/presentation/bindings/employee_shell_binding.dart';
+import '../../features/employee/presentation/daily_report_screen/presentation/bindings/daily_report_binding.dart';
+import '../../features/employee/presentation/daily_report_screen/presentation/views/employee_daily_report_view.dart';
 import '../../features/employee/presentation/leave_screen/presentation/bindings/leave_binding.dart';
 import '../../features/employee/presentation/notifications_screen/presentation/bindings/notifications_binding.dart';
 import '../../features/employee/presentation/profile_screen/presentation/bindings/employee_profile_binding.dart';
 import '../../features/employee/presentation/settings_screen/presentation/bindings/settings_binding.dart';
+import '../../features/employee/presentation/settings_screen/presentation/views/employee_theme_settings_view.dart';
 import '../../features/employee/presentation/settings_screen/presentation/views/employee_alert_settings_view.dart';
 import '../../features/employee/presentation/settings_screen/presentation/views/settings_view.dart';
 import '../../features/employee/presentation/attendance_screen/presentation/views/employee_attendance_view.dart';
+import '../../features/employee/presentation/announcements_screen/presentation/views/employee_announcements_view.dart';
 import '../../features/employee/presentation/notifications_screen/presentation/views/employee_notifications_view.dart';
+import '../../features/employee/presentation/offer_letter_screen/presentation/views/employee_offer_letter_view.dart';
+import '../../features/employee/presentation/payslips_screen/presentation/views/employee_payslips_view.dart';
 import '../../features/employee/presentation/views/employee_shell_view.dart';
 import '../../features/employee/presentation/leave_screen/presentation/views/employee_leave_view.dart';
 import '../../features/employee/presentation/profile_screen/presentation/views/employee_profile_view.dart';
@@ -57,6 +63,11 @@ abstract class AppPages {
       binding: AttendanceBinding(),
     ),
     GetPage(
+      name: AppRoutes.employeeDailyReport,
+      page: () => const EmployeeDailyReportView(),
+      binding: DailyReportBinding(),
+    ),
+    GetPage(
       name: AppRoutes.employeeLeave,
       page: () => const EmployeeLeaveView(),
       binding: LeaveBinding(),
@@ -72,9 +83,25 @@ abstract class AppPages {
       binding: SettingsBinding(),
     ),
     GetPage(
+      name: AppRoutes.employeeThemeSettings,
+      page: () => const EmployeeThemeSettingsView(),
+    ),
+    GetPage(
       name: AppRoutes.employeeNotifications,
       page: () => const EmployeeNotificationsView(),
       binding: NotificationsBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.employeePayslips,
+      page: () => const EmployeePayslipsView(),
+    ),
+    GetPage(
+      name: AppRoutes.employeeOfferLetter,
+      page: () => const EmployeeOfferLetterView(),
+    ),
+    GetPage(
+      name: AppRoutes.employeeAnnouncements,
+      page: () => const EmployeeAnnouncementsView(),
     ),
     GetPage(
       name: AppRoutes.adminDashboard,

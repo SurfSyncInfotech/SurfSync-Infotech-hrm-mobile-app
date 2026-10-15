@@ -14,7 +14,9 @@ class HrmsApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetBuilder<ThemeController>(
-      init: ThemeController(),
+      init: Get.isRegistered<ThemeController>()
+          ? Get.find<ThemeController>()
+          : ThemeController(),
       builder: (themeController) => GetMaterialApp(
         title: AppConstants.appName,
         debugShowCheckedModeBanner: false,

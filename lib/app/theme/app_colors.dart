@@ -44,7 +44,7 @@ abstract class AppColors {
   static const textSecondary = Color(0xFF5B6B64);
   static const sidebarText = Color(0xFFCFE3DA);
 
-  // Status
+  // Status - Light
   static const success = Color(0xFF0F6B4D);
   static const successBg = Color(0xFFE3F2EC);
   static const warning = Color(0xFFB45309);
@@ -54,6 +54,17 @@ abstract class AppColors {
   static const info = Color(0xFF1D6FA5);
   static const infoBg = Color(0xFFE0EEF7);
   static const neutralBg = Color(0xFFEEF2F0);
+
+  // Status - Dark
+  static const successDark = Color(0xFF7BE4B5);
+  static const successBgDark = Color(0xFF0F3627);
+  static const warningDark = Color(0xFFFFB866);
+  static const warningBgDark = Color(0xFF3D270F);
+  static const dangerDark = Color(0xFFFF8E88);
+  static const dangerBgDark = Color(0xFF3D1414);
+  static const infoDark = Color(0xFF78C0F0);
+  static const infoBgDark = Color(0xFF132A3B);
+  static const neutralBgDark = Color(0xFF24332C);
 
   static const loginGradient = [
     Color(0xFF0B3D30),

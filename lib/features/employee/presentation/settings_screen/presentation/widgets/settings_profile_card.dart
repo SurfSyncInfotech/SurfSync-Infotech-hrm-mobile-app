@@ -11,10 +11,20 @@ class SettingsProfileCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final employee = MockEmployeeData.currentEmployee;
     final colors = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+
+    final cardBg = isDark ? colors.surface : colors.primary;
+    final fg = isDark ? colors.onSurface : colors.onPrimary;
+    final fgMuted = isDark
+        ? colors.onSurfaceVariant
+        : colors.onPrimary.withValues(alpha: 0.85);
 
     return Material(
-      color: colors.primary,
-      borderRadius: BorderRadius.circular(18),
+      color: cardBg,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
+        side: BorderSide(color: isDark ? colors.outline : Colors.transparent),
+      ),
       child: InkWell(
         onTap: () => Get.toNamed(AppRoutes.employeeProfile),
         borderRadius: BorderRadius.circular(18),
@@ -26,12 +36,14 @@ class SettingsProfileCard extends StatelessWidget {
                 width: 56,
                 height: 56,
                 decoration: BoxDecoration(
-                  color: colors.onPrimary.withValues(alpha: 0.14),
+                  color: isDark
+                      ? colors.primary.withValues(alpha: 0.14)
+                      : colors.onPrimary.withValues(alpha: 0.14),
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Icon(
                   Icons.person_rounded,
-                  color: colors.onPrimary,
+                  color: isDark ? colors.primary : colors.onPrimary,
                   size: 28,
                 ),
               ),
@@ -43,7 +55,7 @@ class SettingsProfileCard extends StatelessWidget {
                     Text(
                       employee.name,
                       style: TextStyle(
-                        color: colors.onPrimary,
+                        color: fg,
                         fontSize: 18,
                         fontWeight: FontWeight.w700,
                       ),
@@ -52,14 +64,17 @@ class SettingsProfileCard extends StatelessWidget {
                     Text(
                       employee.designation,
                       style: TextStyle(
-                        color: colors.onPrimary.withValues(alpha: 0.8),
+                        color: fgMuted,
                         fontSize: 13,
                       ),
                     ),
                   ],
                 ),
               ),
-              Icon(Icons.chevron_right_rounded, color: colors.onPrimary),
+              Icon(
+                Icons.chevron_right_rounded,
+                color: isDark ? colors.onSurfaceVariant : colors.onPrimary,
+              ),
             ],
           ),
         ),

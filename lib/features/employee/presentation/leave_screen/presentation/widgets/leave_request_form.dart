@@ -14,6 +14,7 @@ class LeaveRequestForm extends GetView<LeaveController> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return Obx(() {
       final repository = controller.repository;
       return Card(
@@ -22,16 +23,23 @@ class LeaveRequestForm extends GetView<LeaveController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Text('New leave request', style: AppTextStyles.heading3),
+              Text(
+                'New leave request',
+                style: AppTextStyles.heading3.copyWith(color: colors.onSurface),
+              ),
               const SizedBox(height: 16),
               DropdownButtonFormField<LeaveType>(
                 initialValue: controller.selectedType.value,
                 isExpanded: true,
+                dropdownColor: colors.surface,
                 items: [
                   for (final type in LeaveType.values)
                     DropdownMenuItem(
                       value: type,
-                      child: Text(type.label),
+                      child: Text(
+                        type.label,
+                        style: TextStyle(color: colors.onSurface),
+                      ),
                     ),
                 ],
                 onChanged: (value) {
@@ -45,10 +53,20 @@ class LeaveRequestForm extends GetView<LeaveController> {
                   Expanded(
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('Start date'),
+                      title: Text(
+                        'Start date',
+                        style: TextStyle(
+                          color: colors.onSurfaceVariant,
+                          fontSize: 12,
+                        ),
+                      ),
                       subtitle: Text(
                         DateFormat('MM/dd/yyyy')
                             .format(controller.startDate.value),
+                        style: TextStyle(
+                          color: colors.onSurface,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       onTap: () => controller.pickStart(context),
                     ),
@@ -56,10 +74,20 @@ class LeaveRequestForm extends GetView<LeaveController> {
                   Expanded(
                     child: ListTile(
                       contentPadding: EdgeInsets.zero,
-                      title: const Text('End date'),
+                      title: Text(
+                        'End date',
+                        style: TextStyle(
+                          color: colors.onSurfaceVariant,
+                          fontSize: 12,
+                        ),
+                      ),
                       subtitle: Text(
                         DateFormat('MM/dd/yyyy')
                             .format(controller.endDate.value),
+                        style: TextStyle(
+                          color: colors.onSurface,
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                       onTap: () => controller.pickEnd(context),
                     ),

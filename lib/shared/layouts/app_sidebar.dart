@@ -30,8 +30,13 @@ class AppSidebar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final sidebarBg = isDark ? const Color(0xFF131D18) : AppColors.forest;
+    final dividerColor = isDark ? colors.outline : Colors.white24;
+
     return Material(
-      color: AppColors.forest,
+      color: sidebarBg,
       child: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -44,10 +49,15 @@ class AppSidebar extends StatelessWidget {
                     height: 42,
                     width: 42,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: isDark
+                          ? colors.surfaceContainerHighest
+                          : Colors.white,
                       borderRadius: BorderRadius.circular(10),
                     ),
-                    child: Icon(brandIcon, color: AppColors.forest),
+                    child: Icon(
+                      brandIcon,
+                      color: isDark ? colors.primary : AppColors.forest,
+                    ),
                   ),
                   const SizedBox(width: 12),
                   Expanded(
@@ -57,14 +67,20 @@ class AppSidebar extends StatelessWidget {
                         Text(
                           brandName,
                           overflow: TextOverflow.ellipsis,
-                          style: AppTextStyles.heading3
-                              .copyWith(color: Colors.white, fontSize: 17),
+                          style: AppTextStyles.heading3.copyWith(
+                            color: isDark ? colors.onSurface : Colors.white,
+                            fontSize: 17,
+                          ),
                         ),
                         const SizedBox(height: 2),
                         Text(
                           brandSubtitle.toUpperCase(),
                           style: AppTextStyles.overline.copyWith(
-                              color: AppColors.sidebarText, fontSize: 10.5),
+                            color: isDark
+                                ? colors.onSurfaceVariant
+                                : AppColors.sidebarText,
+                            fontSize: 10.5,
+                          ),
                         ),
                       ],
                     ),
@@ -72,7 +88,7 @@ class AppSidebar extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(height: 1, color: Colors.white24),
+            Divider(height: 1, color: dividerColor),
             Expanded(
               child: ListView(
                 padding: const EdgeInsets.only(bottom: 12),
@@ -83,7 +99,11 @@ class AppSidebar extends StatelessWidget {
                       child: Text(
                         group.label.toUpperCase(),
                         style: AppTextStyles.overline.copyWith(
-                            color: const Color(0xFF8FC2AE), fontSize: 11),
+                          color: isDark
+                              ? colors.primary
+                              : const Color(0xFF8FC2AE),
+                          fontSize: 11,
+                        ),
                       ),
                     ),
                     for (final item in group.items)
@@ -96,13 +116,15 @@ class AppSidebar extends StatelessWidget {
                 ],
               ),
             ),
-            const Divider(height: 1, color: Colors.white24),
+            Divider(height: 1, color: dividerColor),
             Padding(
               padding: const EdgeInsets.all(18),
               child: Text(
                 footerText,
                 overflow: TextOverflow.ellipsis,
-                style: AppTextStyles.bodyBold.copyWith(color: Colors.white),
+                style: AppTextStyles.bodyBold.copyWith(
+                  color: isDark ? colors.onSurface : Colors.white,
+                ),
               ),
             ),
           ],
@@ -125,10 +147,22 @@ class _SidebarTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final activeTileBg = isDark
+        ? colors.primary.withValues(alpha: 0.15)
+        : Colors.white.withValues(alpha: 0.14);
+    final activeIndicator = isDark ? colors.primary : AppColors.orange;
+    final activeColor = isDark ? colors.primary : Colors.white;
+    final inactiveColor =
+        isDark ? colors.onSurfaceVariant : AppColors.sidebarText;
+
     return Material(
-      color: active ? Colors.white.withValues(alpha: 0.14) : Colors.transparent,
+      color: active ? activeTileBg : Colors.transparent,
       child: InkWell(
-        hoverColor: Colors.white.withValues(alpha: 0.08),
+        hoverColor: isDark
+            ? colors.surfaceContainerHighest.withValues(alpha: 0.5)
+            : Colors.white.withValues(alpha: 0.08),
         onTap: () {
           if (inDrawer) Get.back();
           if (Get.isRegistered<EmployeeShellController>() &&
@@ -146,23 +180,25 @@ class _SidebarTile extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border(
               left: BorderSide(
-                color: active ? AppColors.orange : Colors.transparent,
+                color: active ? activeIndicator : Colors.transparent,
                 width: 3,
               ),
             ),
           ),
           child: Row(
             children: [
-              Icon(item.icon,
-                  size: 20,
-                  color: active ? Colors.white : AppColors.sidebarText),
+              Icon(
+                item.icon,
+                size: 20,
+                color: active ? activeColor : inactiveColor,
+              ),
               const SizedBox(width: 14),
               Expanded(
                 child: Text(
                   item.label,
                   overflow: TextOverflow.ellipsis,
                   style: AppTextStyles.body.copyWith(
-                    color: active ? Colors.white : AppColors.sidebarText,
+                    color: active ? activeColor : inactiveColor,
                     fontWeight: active ? FontWeight.w700 : FontWeight.w500,
                   ),
                 ),

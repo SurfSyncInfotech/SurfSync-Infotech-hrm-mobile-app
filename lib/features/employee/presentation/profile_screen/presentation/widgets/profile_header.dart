@@ -42,7 +42,10 @@ class ProfileHeader extends StatelessWidget {
                 const SizedBox(height: 6),
                 Text(
                   '${employee.designation} · ${employee.department} · ${employee.location}',
-                  style: AppTextStyles.bodyMuted.copyWith(fontSize: 15),
+                  style: AppTextStyles.bodyMuted.copyWith(
+                    fontSize: 15,
+                    color: colors.onSurfaceVariant,
+                  ),
                 ),
                 const SizedBox(height: 12),
                 Wrap(

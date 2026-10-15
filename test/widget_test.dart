@@ -17,16 +17,21 @@ import 'package:hrms_app/app/routes/app_routes.dart';
 import 'package:hrms_app/app/theme/app_theme.dart';
 import 'package:hrms_app/app/theme/theme_controller.dart';
 import 'package:hrms_app/data/models/attendance_record.dart';
+import 'package:hrms_app/data/models/employee_daily_report.dart';
+import 'package:hrms_app/data/repositories/employee_daily_report_repository.dart';
+import 'package:hrms_app/data/repositories/employee_directory_repository.dart';
 import 'package:hrms_app/features/employee/presentation/attendance_screen/presentation/controllers/attendance_controller.dart';
 import 'package:hrms_app/features/employee/presentation/attendance_screen/presentation/views/employee_attendance_view.dart';
 import 'package:hrms_app/features/employee/presentation/bindings/employee_shell_binding.dart';
+import 'package:hrms_app/features/employee/presentation/daily_report_screen/presentation/controllers/daily_report_controller.dart';
+import 'package:hrms_app/features/employee/presentation/daily_report_screen/presentation/views/employee_daily_report_view.dart';
+import 'package:hrms_app/features/employee/presentation/daily_report_screen/presentation/widgets/daily_report_history_tile.dart';
 import 'package:hrms_app/features/employee/presentation/home_screen/presentation/views/employee_home_view.dart';
 import 'package:hrms_app/features/employee/presentation/leave_screen/presentation/controllers/leave_controller.dart';
 import 'package:hrms_app/features/employee/presentation/leave_screen/presentation/views/employee_leave_view.dart';
 import 'package:hrms_app/features/employee/presentation/notifications_screen/presentation/controllers/employee_notifications_controller.dart';
 import 'package:hrms_app/features/employee/presentation/profile_screen/presentation/controllers/employee_profile_controller.dart';
 import 'package:hrms_app/features/employee/presentation/profile_screen/presentation/views/employee_profile_view.dart';
-import 'package:hrms_app/features/employee/presentation/settings_screen/presentation/controllers/settings_controller.dart';
 import 'package:hrms_app/features/employee/presentation/settings_screen/presentation/views/settings_view.dart';
 import 'package:hrms_app/shared/layouts/app_top_bar.dart';
 
@@ -161,30 +166,6 @@ void main() {
     );
   });
 
-  testWidgets('settings appearance control changes theme immediately',
-      (WidgetTester tester) async {
-    Get.put(ThemeController());
-    Get.put(EmployeeNotificationsController());
-    Get.put(SettingsController());
-    await tester.pumpWidget(
-      GetMaterialApp(
-        theme: AppTheme.light,
-        darkTheme: AppTheme.dark,
-        home: const Scaffold(body: SettingsView(embedded: true)),
-      ),
-    );
-    await tester.pump(const Duration(milliseconds: 500));
-    await tester.ensureVisible(find.text('Dark Mode'));
-    await tester.tap(find.text('Dark Mode'));
-    await tester.pumpAndSettle();
-
-    expect(Get.find<ThemeController>().themeMode, ThemeMode.dark);
-    expect(
-      Theme.of(tester.element(find.text('Dark Mode'))).brightness,
-      Brightness.dark,
-    );
-  });
-
   testWidgets('employee screens render in both themes and phone sizes',
       (WidgetTester tester) async {
     tester.view.devicePixelRatio = 1;
@@ -198,6 +179,7 @@ void main() {
       const EmployeeHomeView(embedded: true),
       const EmployeeProfileView(embedded: true),
       const EmployeeAttendanceView(embedded: true),
+      const EmployeeDailyReportView(embedded: true),
       const EmployeeLeaveView(embedded: true),
       const SettingsView(embedded: true),
     ];
@@ -215,8 +197,9 @@ void main() {
             ),
           );
           await tester.pump(const Duration(milliseconds: 500));
+          final screenError = tester.takeException();
           expect(
-            tester.takeException(),
+            screenError,
             isNull,
             reason:
                 '${screen.runtimeType} should render in $mode mode at $size.',
@@ -224,6 +207,48 @@ void main() {
         }
       }
     }
+  });
+
+  testWidgets('daily report history tiles fill the available phone width',
+      (WidgetTester tester) async {
+    tester.view.physicalSize = const Size(390, 844);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.resetPhysicalSize);
+    addTearDown(tester.view.resetDevicePixelRatio);
+
+    InitialBinding().dependencies();
+    EmployeeShellBinding().dependencies();
+    final employeeId = Get.find<EmployeeDirectoryRepository>().current.id;
+    final report = EmployeeDailyReport(
+      id: 'report-layout-test',
+      employeeId: employeeId,
+      employeeName: 'Employee',
+      date: DateTime(2026, 10, 15),
+      hoursWorked: 0,
+      workDone: 'Completed a task',
+      blockers: 'None',
+      plansForTomorrow: 'Continue work',
+      status: 'Pending',
+    );
+
+    await tester.pumpWidget(
+      GetMaterialApp(
+        theme: AppTheme.light,
+        home: const Scaffold(
+          body: EmployeeDailyReportView(embedded: true),
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    Get.find<EmployeeDailyReportRepository>().reports.assignAll([report]);
+    await tester.drag(find.byType(ListView), const Offset(0, -1400));
+    await tester.pumpAndSettle();
+
+    expect(
+      tester.getSize(find.byType(DailyReportHistoryTile)).width,
+      greaterThan(340),
+    );
+    expect(tester.takeException(), isNull);
   });
 
   testWidgets('employee shell binds feature controllers and switches tabs',
@@ -251,6 +276,41 @@ void main() {
     expect(Get.isRegistered<EmployeeProfileController>(), isTrue);
     expect(Get.isRegistered<AttendanceController>(), isTrue);
     expect(Get.isRegistered<LeaveController>(), isTrue);
+    expect(Get.isRegistered<DailyReportController>(), isTrue);
+    expect(find.text("Today's activity"), findsNothing);
+    expect(find.text('Live session tracking'), findsNothing);
+    expect(find.text('Attendance'), findsOneWidget);
+
+    final drpTab = find.descendant(
+      of: find.byType(NavigationBar),
+      matching: find.text('DRP'),
+    );
+    await tester.tap(drpTab);
+    await tester.pump(const Duration(milliseconds: 500));
+
+    expect(find.text('Daily Work Report'), findsOneWidget);
+    expect(find.text('Hours worked'), findsOneWidget);
+    expect(tester.takeException(), isNull);
+
+    final dailyReportController = Get.find<DailyReportController>();
+    dailyReportController.workDoneController.text = 'Completed DRP UI work.';
+    await dailyReportController.submitReport();
+    await tester.pump(const Duration(milliseconds: 500));
+    expect(Get.find<DailyReportController>().employeeReports, hasLength(1));
+    Get.closeAllSnackbars();
+    await tester.pumpAndSettle();
+    await tester.scrollUntilVisible(
+      find.text('Completed DRP UI work.'),
+      300,
+      scrollable: find
+          .descendant(
+            of: find.byType(EmployeeDailyReportView),
+            matching: find.byType(Scrollable),
+          )
+          .first,
+    );
+    expect(find.text('Completed DRP UI work.'), findsOneWidget);
+    expect(tester.takeException(), isNull);
 
     final leaveTab = find.descendant(
       of: find.byType(NavigationBar),

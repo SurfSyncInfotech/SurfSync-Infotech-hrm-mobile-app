@@ -31,11 +31,19 @@ class AppEmptyState extends StatelessWidget {
               child: Icon(icon, size: 28, color: colors.onSurfaceVariant),
             ),
             const SizedBox(height: 16),
-            Text(title, style: AppTextStyles.heading3),
+            Text(
+              title,
+              style:
+                  AppTextStyles.heading3.copyWith(color: colors.onSurface),
+            ),
             if (message != null) ...[
               const SizedBox(height: 6),
-              Text(message!,
-                  textAlign: TextAlign.center, style: AppTextStyles.bodyMuted),
+              Text(
+                message!,
+                textAlign: TextAlign.center,
+                style: AppTextStyles.bodyMuted
+                    .copyWith(color: colors.onSurfaceVariant),
+              ),
             ],
             if (action != null) ...[const SizedBox(height: 16), action!],
           ],

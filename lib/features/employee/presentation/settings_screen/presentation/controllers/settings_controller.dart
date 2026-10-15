@@ -36,11 +36,6 @@ class SettingsController extends GetxController {
             icon: Icons.person_outline_rounded,
             route: '/employee/profile'),
         SettingsItem(
-            title: 'Personal Information',
-            subtitle: 'Update your identity and address details',
-            icon: Icons.badge_outlined,
-            route: '/employee/profile'),
-        SettingsItem(
             title: 'Change Password',
             subtitle: 'Secure your account and login access',
             icon: Icons.lock_outline_rounded),
@@ -49,11 +44,6 @@ class SettingsController extends GetxController {
     SettingsSection(
       title: 'Attendance & Work',
       items: [
-        SettingsItem(
-            title: 'Attendance Settings',
-            subtitle: 'Manage check-in and location preferences',
-            icon: Icons.access_time_rounded,
-            route: '/employee/attendance'),
         SettingsItem(
             title: 'Work Schedule',
             subtitle: 'Review shift timings and calendar rules',
@@ -85,35 +75,48 @@ class SettingsController extends GetxController {
             route: '/employee/leave'),
       ],
     ),
-    SettingsSection(
-      title: 'Notifications',
-      items: [
-        SettingsItem(
-            title: 'Notification Preferences',
-            subtitle: 'Control what alerts you receive',
-            icon: Icons.notifications_none_rounded),
-        SettingsItem(
-            title: 'Alert Settings',
-            subtitle: 'Review reminders and escalation rules',
-            icon: Icons.notifications_active_outlined,
-            route: '/employee/alert-settings'),
-      ],
-    ),
+    // SettingsSection(
+    //   title: 'Notifications',
+    //   items: [
+    //     SettingsItem(
+    //         title: 'Notification Preferences',
+    //         subtitle: 'Control what alerts you receive',
+    //         icon: Icons.notifications_none_rounded),
+    //     SettingsItem(
+    //         title: 'Alert Settings',
+    //         subtitle: 'Review reminders and escalation rules',
+    //         icon: Icons.notifications_active_outlined,
+    //         route: '/employee/alert-settings'),
+    //   ],
+    // ),
     SettingsSection(
       title: 'Documents & Payroll',
       items: [
         SettingsItem(
             title: 'Offer Letter',
             subtitle: 'View your employment letter',
-            icon: Icons.description_outlined),
+            icon: Icons.description_outlined,
+            route: '/employee/offer-letter'),
         SettingsItem(
             title: 'Payslips',
             subtitle: 'Access monthly salary slips',
-            icon: Icons.payments_outlined),
+            icon: Icons.payments_outlined,
+            route: '/employee/payslips'),
         SettingsItem(
             title: 'Company Policies',
             subtitle: 'Read employee policy documents',
             icon: Icons.policy_rounded),
+      ],
+    ),
+    SettingsSection(
+      title: 'Company',
+      items: [
+        SettingsItem(
+          title: 'Announcements',
+          subtitle: 'Company notices, events, and team birthdays',
+          icon: Icons.campaign_outlined,
+          route: '/employee/announcements',
+        ),
       ],
     ),
     SettingsSection(
@@ -124,10 +127,10 @@ class SettingsController extends GetxController {
             subtitle: 'App version and product information',
             icon: Icons.info_outline_rounded),
         SettingsItem(
-            title: 'Logout',
-            subtitle: 'Sign out of the employee portal',
-            icon: Icons.logout_rounded,
-            route: '/login'),
+            title: 'Dark Mode',
+            subtitle: 'Choose light, dark, or system appearance',
+            icon: Icons.dark_mode_rounded,
+            route: '/employee/theme-settings'),
       ],
     ),
   ].obs;

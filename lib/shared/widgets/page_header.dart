@@ -33,10 +33,18 @@ class PageHeader extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(title, style: AppTextStyles.heading1),
+              Text(
+                title,
+                style:
+                    AppTextStyles.heading1.copyWith(color: colors.onSurface),
+              ),
               if (subtitle != null) ...[
                 const SizedBox(height: 4),
-                Text(subtitle!, style: AppTextStyles.bodyMuted),
+                Text(
+                  subtitle!,
+                  style: AppTextStyles.bodyMuted
+                      .copyWith(color: colors.onSurfaceVariant),
+                ),
               ],
             ],
           ),

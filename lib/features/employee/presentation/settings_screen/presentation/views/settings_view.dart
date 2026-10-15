@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import '../../../../../../app/routes/app_routes.dart';
 import '../../../../../../shared/layouts/employee_layout.dart';
 import '../controllers/settings_controller.dart';
-import '../widgets/settings_appearance_section.dart';
 import '../widgets/settings_header.dart';
 import '../widgets/settings_logout_tile.dart';
 import '../widgets/settings_profile_card.dart';
@@ -30,8 +29,6 @@ class SettingsView extends GetView<SettingsController> {
                   SettingsSectionWidget(section: section),
                   const SizedBox(height: 16),
                 ]),
-            const SettingsAppearanceSection(),
-            const SizedBox(height: 16),
             const SettingsLogoutTile(),
           ],
         ),

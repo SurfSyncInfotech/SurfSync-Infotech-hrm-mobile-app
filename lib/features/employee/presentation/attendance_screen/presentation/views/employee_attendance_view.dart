@@ -19,6 +19,8 @@ class EmployeeAttendanceView extends GetView<AttendanceController> {
   @override
   Widget build(BuildContext context) {
     final attendanceController = controller;
+    final theme = Theme.of(context);
+    final colors = theme.colorScheme;
     final content = Obx(() {
       final history = attendanceController.attendance.historyFor(
         attendanceController.directory.current.id,
@@ -27,19 +29,24 @@ class EmployeeAttendanceView extends GetView<AttendanceController> {
         children: [
           Text(
             'Attendance',
-            style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+            style: theme.textTheme.headlineMedium?.copyWith(
                   fontWeight: FontWeight.w800,
+                  color: colors.onSurface,
                 ),
           ),
           const SizedBox(height: 4),
           Text(
             'Today’s punch and your previous records share the same attendance data.',
-            style: AppTextStyles.bodyMuted,
+            style: AppTextStyles.bodyMuted
+                .copyWith(color: colors.onSurfaceVariant),
           ),
           const SizedBox(height: 16),
           const EmployeeAttendanceCard(),
           const SizedBox(height: 18),
-          Text('History', style: AppTextStyles.heading3),
+          Text(
+            'History',
+            style: AppTextStyles.heading3.copyWith(color: colors.onSurface),
+          ),
           const SizedBox(height: 8),
           if (history.isEmpty)
             const AppEmptyState(
@@ -51,11 +58,16 @@ class EmployeeAttendanceView extends GetView<AttendanceController> {
             ...history.map(
               (record) => Card(
                 child: ListTile(
-                  title:
-                      Text(DateFormat('EEE, d MMM yyyy').format(record.date)),
+                  title: Text(
+                    DateFormat('EEE, d MMM yyyy').format(record.date),
+                    style: AppTextStyles.bodyBold
+                        .copyWith(color: colors.onSurface),
+                  ),
                   subtitle: Text(
                     'In ${attendanceController.formatTime(record.checkIn)} · Out ${attendanceController.formatTime(record.checkOut)}'
                     '${record.locationLabel == null ? '' : ' · ${record.locationLabel}'}',
+                    style: AppTextStyles.bodyMuted
+                        .copyWith(color: colors.onSurfaceVariant),
                   ),
                   trailing: AppStatusChip.auto(
                     record.checkOut != null

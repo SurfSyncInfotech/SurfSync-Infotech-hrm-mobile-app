@@ -80,17 +80,26 @@ class AppDataTable<T> extends StatelessWidget {
                   headingRowColor: WidgetStateProperty.all(
                     colors.surfaceContainerHighest,
                   ),
-                  headingTextStyle: AppTextStyles.overline,
-                  dataTextStyle: AppTextStyles.body,
+                  headingTextStyle: AppTextStyles.overline
+                      .copyWith(color: colors.onSurfaceVariant),
+                  dataTextStyle:
+                      AppTextStyles.body.copyWith(color: colors.onSurface),
                   dataRowMinHeight: 56,
                   dataRowMaxHeight: 64,
                   columnSpacing: 28,
                   horizontalMargin: 20,
                   dividerThickness: 1,
+                  border: TableBorder(
+                    horizontalInside:
+                        BorderSide(color: colors.outline, width: 1),
+                  ),
                   columns: [
                     for (final c in columns)
                       DataColumn(
-                        label: Text(c.label.toUpperCase()),
+                        label: Text(
+                          c.label.toUpperCase(),
+                          style: TextStyle(color: colors.onSurfaceVariant),
+                        ),
                         numeric: c.numeric,
                       ),
                   ],

@@ -16,16 +16,24 @@ class LoginView extends GetView<LoginController> {
 
   final bool isAdmin;
 
-  Widget _label(String text) => Padding(
+  Widget _label(String text, Color color) => Padding(
         padding: const EdgeInsets.only(bottom: AppDimensions.spaceXs + 2),
-        child:
-            Text(text, style: AppTextStyles.bodyBold.copyWith(fontSize: 13.5)),
+        child: Text(
+          text,
+          style: AppTextStyles.bodyBold.copyWith(
+            fontSize: 13.5,
+            color: color,
+          ),
+        ),
       );
 
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
-    final fieldStyle = AppTextStyles.body.copyWith(fontSize: 15);
+    final fieldStyle = AppTextStyles.body.copyWith(
+      fontSize: 15,
+      color: colors.onSurface,
+    );
 
     return Scaffold(
       body: Container(
@@ -58,6 +66,7 @@ class LoginView extends GetView<LoginController> {
                         color: colors.surface,
                         borderRadius:
                             BorderRadius.circular(AppDimensions.radiusLg),
+                        border: Border.all(color: colors.outline),
                         boxShadow: [
                           BoxShadow(
                             color: colors.shadow.withValues(alpha: 0.14),
@@ -88,13 +97,15 @@ class LoginView extends GetView<LoginController> {
                                   ? 'Sign in to the Admin / HR portal'
                                   : 'Sign in to your employee portal',
                               textAlign: TextAlign.center,
-                              style: AppTextStyles.bodyMuted
-                                  .copyWith(fontSize: 13.5),
+                              style: AppTextStyles.bodyMuted.copyWith(
+                                fontSize: 13.5,
+                                color: colors.onSurfaceVariant,
+                              ),
                             ),
                             const SizedBox(height: AppDimensions.spaceMd + 2),
 
                             // Email — decoration comes from AppTheme
-                            _label('Email'),
+                            _label('Email', colors.onSurface),
                             TextFormField(
                               controller: controller.emailController,
                               keyboardType: TextInputType.emailAddress,
@@ -113,7 +124,7 @@ class LoginView extends GetView<LoginController> {
                             const SizedBox(height: AppDimensions.spaceMd),
 
                             // Password
-                            _label('Password'),
+                            _label('Password', colors.onSurface),
                             Obx(
                               () => TextFormField(
                                 controller: controller.passwordController,
@@ -167,8 +178,10 @@ class LoginView extends GetView<LoginController> {
                                   padding: const EdgeInsets.symmetric(
                                       horizontal: 12),
                                   child: Text('or',
-                                      style: AppTextStyles.bodyMuted
-                                          .copyWith(fontSize: 12.5)),
+                                      style: AppTextStyles.bodyMuted.copyWith(
+                                        fontSize: 12.5,
+                                        color: colors.onSurfaceVariant,
+                                      )),
                                 ),
                                 const Expanded(child: Divider()),
                               ],

@@ -21,13 +21,17 @@ class AppSectionCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
+    final headerBg = isDark ? colors.surfaceContainerHighest : colors.primary;
+    final headerFg = isDark ? colors.primary : colors.onPrimary;
+
     return AppCard(
       padding: EdgeInsets.zero,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-            color: colors.primary,
+            color: headerBg,
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 13),
             child: Row(
               children: [
@@ -35,7 +39,7 @@ class AppSectionCard extends StatelessWidget {
                   child: Text(
                     title.toUpperCase(),
                     style: AppTextStyles.bodyBold.copyWith(
-                      color: colors.onPrimary,
+                      color: headerFg,
                       fontSize: 12.5,
                       letterSpacing: 0.9,
                     ),
@@ -83,7 +87,11 @@ class AppKeyValueRow extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(label, style: AppTextStyles.bodyMuted),
+                Text(
+                  label,
+                  style: AppTextStyles.bodyMuted
+                      .copyWith(color: colors.onSurfaceVariant),
+                ),
                 const SizedBox(height: 4),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -91,7 +99,8 @@ class AppKeyValueRow extends StatelessWidget {
                     Expanded(
                       child: Text(
                         value,
-                        style: AppTextStyles.bodyBold,
+                        style: AppTextStyles.bodyBold
+                            .copyWith(color: colors.onSurface),
                       ),
                     ),
                     if (trailing != null) trailing!,
@@ -103,13 +112,18 @@ class AppKeyValueRow extends StatelessWidget {
 
           return Row(
             children: [
-              Text(label, style: AppTextStyles.bodyMuted),
+              Text(
+                label,
+                style: AppTextStyles.bodyMuted
+                    .copyWith(color: colors.onSurfaceVariant),
+              ),
               const SizedBox(width: 16),
               Expanded(
                 child: Text(
                   value,
                   textAlign: TextAlign.right,
-                  style: AppTextStyles.bodyBold,
+                  style:
+                      AppTextStyles.bodyBold.copyWith(color: colors.onSurface),
                 ),
               ),
               if (trailing != null) trailing!,

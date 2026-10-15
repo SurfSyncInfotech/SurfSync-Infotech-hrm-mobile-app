@@ -6,7 +6,7 @@ class EmployeeShellController extends GetxController {
   static const tabRoutes = [
     AppRoutes.employeeDashboard,
     AppRoutes.employeeProfile,
-    AppRoutes.employeeAttendance,
+    AppRoutes.employeeDailyReport,
     AppRoutes.employeeLeave,
     AppRoutes.employeeSettings,
   ];

@@ -15,6 +15,7 @@ class EmployeeLeaveView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     final content = ListView(
       children: [
         Text(
@@ -22,13 +23,17 @@ class EmployeeLeaveView extends StatelessWidget {
           style: Theme.of(context)
               .textTheme
               .headlineMedium
-              ?.copyWith(fontWeight: FontWeight.w800),
+              ?.copyWith(
+                fontWeight: FontWeight.w800,
+                color: colors.onSurface,
+              ),
         ),
-        const SizedBox(height: 4),
-        Text(
-          'Check your balance and submit leave requests for approval.',
-          style: AppTextStyles.bodyMuted,
-        ),
+        // const SizedBox(height: 4),
+        // Text(
+        //   'Check your balance and submit leave requests for approval.',
+        //   style: AppTextStyles.bodyMuted
+        //       .copyWith(color: colors.onSurfaceVariant),
+        // ),
         const SizedBox(height: 16),
         const LeaveBalanceSection(),
         const SizedBox(height: 20),

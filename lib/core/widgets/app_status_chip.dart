@@ -54,6 +54,7 @@ class AppStatusChip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colors = Theme.of(context).colorScheme;
+    final isDark = Theme.of(context).brightness == Brightness.dark;
     final (Color bg, Color fg) = switch (type) {
       StatusType.success => (
           colors.primaryContainer,
@@ -75,6 +76,10 @@ class AppStatusChip extends StatelessWidget {
       decoration: BoxDecoration(
         color: bg,
         borderRadius: BorderRadius.circular(999),
+        border: Border.all(
+          color: fg.withValues(alpha: isDark ? 0.3 : 0.15),
+          width: 1,
+        ),
       ),
       child: Text(
         uppercase ? label.toUpperCase() : label,

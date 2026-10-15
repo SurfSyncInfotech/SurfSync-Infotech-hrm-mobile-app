@@ -58,17 +58,36 @@ class DesignSystemView extends GetView<DesignSystemController> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Buttons', style: AppTextStyles.heading3),
+                Text(
+                  'Buttons',
+                  style: AppTextStyles.heading3.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Wrap(spacing: 12, runSpacing: 12, children: [
                   AppButton(label: 'Primary', onPressed: () {}),
-                  AppButton(label: 'Secondary', type: AppButtonType.secondary, onPressed: () {}),
-                  AppButton(label: 'Outline', type: AppButtonType.outline, onPressed: () {}),
-                  AppButton(label: 'Text', type: AppButtonType.text, onPressed: () {}),
+                  AppButton(
+                      label: 'Secondary',
+                      type: AppButtonType.secondary,
+                      onPressed: () {}),
+                  AppButton(
+                      label: 'Outline',
+                      type: AppButtonType.outline,
+                      onPressed: () {}),
+                  AppButton(
+                      label: 'Text',
+                      type: AppButtonType.text,
+                      onPressed: () {}),
                   const AppButton(label: 'Disabled', onPressed: null),
                 ]),
                 const SizedBox(height: 20),
-                Text('Status chips', style: AppTextStyles.heading3),
+                Text(
+                  'Status chips',
+                  style: AppTextStyles.heading3.copyWith(
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
                 const SizedBox(height: 12),
                 Wrap(spacing: 8, runSpacing: 8, children: [
                   AppStatusChip.auto('Active'),

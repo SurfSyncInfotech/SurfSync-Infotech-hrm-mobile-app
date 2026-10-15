@@ -30,11 +30,11 @@ class SettingsAppearanceSection extends StatelessWidget {
                 fontWeight: FontWeight.w800,
               ),
             ),
-            const SizedBox(height: 4),
-            Text(
-              'Choose how SurfSync looks on this device.',
-              style: TextStyle(color: colors.onSurfaceVariant),
-            ),
+            // const SizedBox(height: 4),
+            // Text(
+            //   'Choose how SurfSync looks on this device.',
+            //   style: TextStyle(color: colors.onSurfaceVariant),
+            // ),
             const SizedBox(height: 14),
             Wrap(
               spacing: 8,
@@ -87,10 +87,26 @@ class _ThemeChoice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     return ChoiceChip(
-      avatar: Icon(icon, size: 18),
-      label: Text(label),
+      avatar: Icon(
+        icon,
+        size: 18,
+        color: selected ? colors.primary : colors.onSurfaceVariant,
+      ),
+      label: Text(
+        label,
+        style: TextStyle(
+          color: selected ? colors.primary : colors.onSurface,
+          fontWeight: selected ? FontWeight.w700 : FontWeight.w500,
+        ),
+      ),
       selected: selected,
+      selectedColor: colors.primary.withValues(alpha: 0.16),
+      backgroundColor: colors.surfaceContainerHighest,
+      side: BorderSide(
+        color: selected ? colors.primary : colors.outline,
+      ),
       onSelected: (_) => onSelected(mode),
     );
   }

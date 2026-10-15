@@ -72,9 +72,9 @@ class EmployeeLayout extends StatelessWidget {
         icon: Icons.person_outline_rounded,
         route: AppRoutes.employeeProfile),
     NavItem(
-        label: 'Attendance',
-        icon: Icons.access_time_rounded,
-        route: AppRoutes.employeeAttendance),
+        label: 'DRP',
+        icon: Icons.description_outlined,
+        route: AppRoutes.employeeDailyReport),
     NavItem(
         label: 'Leaves',
         icon: Icons.event_available_rounded,

@@ -21,6 +21,7 @@ abstract class AppRoutes {
   static const employeePayslips = '/employee/payslips';
   static const employeeAssets = '/employee/assets';
   static const employeeAnnouncements = '/employee/announcements';
+  static const employeeThemeSettings = '/employee/theme-settings';
   static const employeeTargets = '/employee/targets';
 
   // HR / Admin portal
